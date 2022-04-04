@@ -1,22 +1,32 @@
 package com.mycompany.invoise;
 
-import com.mycompany.invoise.entity.Invoice;
-import com.mycompany.invoise.service.InvoiceService;
+import com.mycompany.invoise.controller.InvoiceControllerInterface;
+import com.mycompany.invoise.controller.InvoiceControllerKeyboard;
+import com.mycompany.invoise.controller.InvoiceControllerDouchette;
+import com.mycompany.invoise.controller.InvoiceControllerWeb;
+import com.mycompany.invoise.repository.InvoiceRepositoryInterface;
+import com.mycompany.invoise.repository.InvoiceRepositoryMemory;
+import com.mycompany.invoise.repository.InvoiceRepositoryDatabase;
+import com.mycompany.invoise.service.InvoiceServiceInterface;
+import com.mycompany.invoise.service.InvoiceServiceNumber;
+import com.mycompany.invoise.service.InvoiceServicePrefix;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Scanner;
 
+/**
+ * Hello world!
+ *
+ */
 public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Quel est le nom du client ?" );
-        Scanner sc=new Scanner(System.in);
-        String customerName=sc.nextLine();
 
-        Invoice invoice=new Invoice();
-        invoice.setCustomerName(customerName);
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        InvoiceControllerInterface invoiceController=context.getBean(InvoiceControllerInterface.class);
 
-        InvoiceService invoiceService=new InvoiceService();
-        invoiceService.createInvoice(invoice);
+        invoiceController.createInvoice();
     }
 }
